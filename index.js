@@ -51,10 +51,17 @@ function handleReplyClick(replyId){
     document.getElementById(`replies-${replyId}`).classList.toggle('hidden')
 }
 
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
 function handleTweetBtnClick(){
     const tweetInput = document.getElementById('tweet-input')
 
     if(tweetInput.value){
+        const safeText = escapeHtml(tweetInput.value)
         tweetsData.unshift({
             handle: `@Diego`,
             profilePic: `images/diego.jpg`,
@@ -142,6 +149,7 @@ function getFeedHtml(){
 function render(){
     document.getElementById('feed').innerHTML = getFeedHtml()
 }
+
 
 render()
 
