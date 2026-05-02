@@ -73,27 +73,20 @@ function handleTweetBtnClick(){
 }
 
 function getFeedHtml(){
-    let feedHtml = ``
     
-    tweetsData.forEach(function(tweet){
+    return tweetsData.map(function(tweet){
         
-        let likeIconClass = ''
+        let likeIconClass = tweet.isLiked ? 'liked' : ''     
         
-        if (tweet.isLiked){
-            likeIconClass = 'liked'
-        }
         
-        let retweetIconClass = ''
-        
-        if (tweet.isRetweeted){
-            retweetIconClass = 'retweeted'
-        }
+        let retweetIconClass = tweet.isRetweeted ? 'retweeted' : ''        
+       
         
         let repliesHtml = ''
         
         if(tweet.replies.length > 0){
-            tweet.replies.forEach(function(reply){
-                repliesHtml+=`
+            repliesHtml = tweet.replies.map(function(reply){
+                return `
 <div class="tweet-reply">
     <div class="tweet-inner">
         <img src="${reply.profilePic}" class="profile-pic">
@@ -104,11 +97,11 @@ function getFeedHtml(){
         </div>
 </div>
 `
-            })
+            }).join('')
         }
         
           
-        feedHtml += `
+        return `
 <div class="tweet">
     <div class="tweet-inner">
         <img src="${tweet.profilePic}" class="profile-pic">
@@ -142,8 +135,8 @@ function getFeedHtml(){
     </div>   
 </div>
 `
-   })
-   return feedHtml 
+   }).join('')
+ 
 }
 
 function render(){
